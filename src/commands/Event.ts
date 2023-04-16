@@ -8,28 +8,31 @@ import {
 } from "discord.js";
 import { Command } from "../lib/Comamnd";
 import fetch from "node-fetch";
+import { eventChoices, yearChoices } from "../lib/choices/events";
 
 export const Event: Command = {
-  name: "competition",
+  name: "comp",
   description: "Find details about our competitions",
   type: ApplicationCommandType.ChatInput,
   options: [
     {
-      name: "event",
-      description: "Event Name",
+      name: "name",
+      description: "The event name (ex. mcmaster)",
       type: ApplicationCommandOptionType.String,
       required: true,
+      choices: eventChoices,
     },
     {
       name: "year",
-      description: "Year of Event",
-      type: ApplicationCommandOptionType.Number,
+      description: "The year of the event (ex. 2018)",
+      type: ApplicationCommandOptionType.String,
       required: true,
+      choices: yearChoices,
     },
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
-    const event = String(interaction.options.get("event")?.value).toLowerCase();
-    const year = String(interaction.options.get("year")?.value).toLowerCase();
+    const event = interaction.options.get("name")?.value;
+    const year = interaction.options.get("year")?.value;
 
     const nonDistrictEvents = ["worlds", "provincials"];
 
@@ -96,9 +99,7 @@ export const Event: Command = {
         });
       })
       .catch(async (error) => {
-        return await interaction.reply(
-          codeBlock("ts", error)
-        );
+        return await interaction.reply(codeBlock("ts", error));
       });
   },
 };
