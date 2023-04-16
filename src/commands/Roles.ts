@@ -14,12 +14,12 @@ const embed = new EmbedBuilder().setColor("#fbbb04").setTimestamp();
 
 export const Roles: Command = {
   name: "roles",
-  description: "Send the roles message in #roles :)",
+  description: "Select the department that you're on",
   type: ApplicationCommandType.ChatInput,
   options: [
     {
       name: "role",
-      description: "Select the department that you're on",
+      description: "Choose your department",
       type: ApplicationCommandOptionType.String,
       required: true,
       choices: roleChoices,
